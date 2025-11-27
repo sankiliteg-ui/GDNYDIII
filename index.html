@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oye Nakchadi! Good Night</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #050505;
+            color: white;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* Star Animation */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Neon Text Effect */
+        .neon-text {
+            font-family: 'Bangers', cursive;
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #ff00de,
+                0 0 30px #ff00de,
+                0 0 40px #ff00de,
+                0 0 55px #ff00de,
+                0 0 75px #ff00de;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        .neon-blue {
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #00eebb,
+                0 0 30px #00eebb,
+                0 0 40px #00eebb;
+             animation: flickerBlue 2s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 
+                0 0 4px #fff,
+                0 0 11px #fff,
+                0 0 19px #ff00de,
+                0 0 40px #ff00de,
+                0 0 80px #ff00de,
+                0 0 90px #ff00de;
+            }
+            20%, 24%, 55% {        
+                text-shadow: none;
+            }   
+        }
+
+        @keyframes flickerBlue {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Floating Moon */
+        .moon {
+            position: absolute;
+            top: 50px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+            background: transparent;
+            box-shadow: -15px 15px 0 5px #f6f1d5;
+            border-radius: 50%;
+            transform: rotate(-20deg);
+            filter: drop-shadow(0 0 10px #f6f1d5);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-20deg); }
+            50% { transform: translateY(-20px) rotate(-20deg); }
+        }
+
+        .rope {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            width: 2px;
+            height: 150px;
+            background: #444;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        .bulb-holder {
+            position: absolute;
+            top: 50px; /* rope length */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .bulb-holder:active {
+            transform: translateX(-50%) translateY(5px);
+        }
+
+        .bulb-base {
+            width: 20px;
+            height: 15px;
+            background: #333;
+        }
+
+        .bulb {
+            width: 40px;
+            height: 40px;
+            background: #222;
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(255,255,0,0);
+            transition: all 0.3s ease;
+        }
+
+        .bulb.on {
+            background: #ffdb4d;
+            box-shadow: 0 0 50px #ffdb4d, 0 0 100px #ffdb4d;
+        }
+
+        /* Hide scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Background Elements -->
+    <div id="stars-container" class="absolute inset-0 z-0 pointer-events-none"></div>
+    <div class="moon z-0"></div>
+
+    <!-- Hanging Light Switch -->
+    <div class="bulb-holder" onclick="toggleLight()">
+        <div class="rope" style="height: 50px;"></div>
+        <div class="bulb-base"></div>
+        <div id="bulb" class="bulb on"></div>
+        <p class="text-[10px] text-gray-500 mt-1">Click Me</p>
+    </div>
+
+    <!-- Main Content Card -->
+    <main class="relative z-10 w-full max-w-md p-6 mx-4 text-center glass-card rounded-3xl border-t border-gray-700 transition-all duration-500 transform hover:scale-105" id="main-card">
+        
+        <!-- Header -->
+        <h1 class="text-5xl mb-2 tracking-wider neon-text">
+            OYE CUTIII! 🧛‍♀️
+        </h1>
+        
+        <h2 class="text-xl font-light text-cyan-300 font-[Pacifico] tracking-widest mb-6">
+            (Meri Pyaari Behen)
+        </h2>
+
+        <!-- Funny Dynamic Message -->
+        <div class="min-h-[120px] flex items-center justify-center">
+            <p id="roast-message" class="text-lg md:text-xl font-semibold leading-relaxed text-gray-200 neon-blue">
+                Phone rakh de side mein, warna mummy ko bata dunga ki tu kisse chat kar rahi hai! 📱🤫
+            </p>
+        </div>
+
+        <!-- Divider -->
+        <div class="h-px w-full bg-gradient-to-r from-transparent via-purple-500 to-transparent my-6"></div>
+
+        <!-- Action Buttons -->
+        <div class="space-y-4">
+            <button onclick="changeMessage()" class="w-full bg-transparent border-2 border-pink-500 hover:bg-pink-500 hover:text-white text-pink-400 font-bold py-3 px-6 rounded-full transition duration-300 shadow-[0_0_15px_rgba(236,72,153,0.5)] active:scale-95">
+                Change Roast 🔥
+            </button>
+            
+            <button onclick="showGift()" id="gift-btn" class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full transition duration-300 shadow-lg hover:shadow-cyan-500/50 active:scale-95 animate-bounce">
+                Gift Lele 🎁
+            </button>
+        </div>
+
+        <p class="mt-8 text-xs text-gray-400 font-mono">
+            Generated by your cool brother • Sleep Time: NOW
+        </p>
+
+    </main>
+
+    <!-- Hidden Prank Modal -->
+    <div id="prank-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
+        <div class="text-center p-8 transform transition-all scale-0" id="prank-content">
+            <div class="text-8xl mb-4">👻</div>
+            <h2 class="text-4xl neon-text text-red-500 mb-4">THULLU MILEGA!</h2>
+            <p class="text-xl text-white mb-6">Chup chap so ja, sapne mein gift milega.</p>
+            <button onclick="closePrank()" class="bg-white text-black font-bold py-2 px-6 rounded hover:bg-gray-200">
+                Ok sorry 🥺
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. Generate Stars Background ---
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Random positions
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const size = Math.random() * 3;
+            const duration = Math.random() * 3 + 2; // 2s to 5s
+
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${duration}s`);
+
+            starsContainer.appendChild(star);
+        }
+
+        // --- 2. Desi Roasts Logic ---
+        const messages = [
+            "Phone rakh de side mein, warna mummy ko bata dunga ki tu kisse chat kar rahi hai! 📱🤫",
+            "So ja moti, beauty sleep lene se bhi shakal change nahi hogi. 😂",
+            "Bhoot tere bistar ke neeche wait kar raha hai. Good Night! 👻",
+            "Zyada mat muskura, daant peeli hai teri. Brush karke so ja. 🪥",
+            "Data pack khatam ho jayega reels dekh ke, so ja kanjoos! 📉",
+            "Good Night! Sapne mein bhi mujhe pareshan mat karna. 🙏",
+            "Aaj jaldi so ja, kal subah ghar ka kaam bhi karna hai. 🧹"
+        ];
+
+        function changeMessage() {
+            const messageEl = document.getElementById('roast-message');
+            // Add fade out effect
+            messageEl.style.opacity = '0';
+            
+            setTimeout(() => {
+                const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+                messageEl.innerText = randomMsg;
+                // Fade in
+                messageEl.style.opacity = '1';
+            }, 300);
+        }
+
+        // --- 3. Light Switch Logic ---
+        let isLightOn = true;
+        function toggleLight() {
+            const bulb = document.getElementById('bulb');
+            const card = document.getElementById('main-card');
+            const body = document.body;
+            
+            isLightOn = !isLightOn;
+
+            if (isLightOn) {
+                bulb.classList.add('on');
+                card.style.opacity = '1';
+                card.style.filter = 'none';
+                document.querySelector('.neon-text').style.textShadow = '0 0 10px #fff, 0 0 20px #ff00de, 0 0 40px #ff00de';
+            } else {
+                bulb.classList.remove('on');
+                card.style.opacity = '0.3';
+                card.style.filter = 'grayscale(100%)';
+                // Turn off neon
+                document.querySelector('.neon-text').style.animation = 'none';
+                document.querySelector('.neon-text').style.textShadow = 'none';
+                document.querySelector('.neon-text').style.color = '#333';
+            }
+        }
+
+        // --- 4. Prank Gift Logic ---
+        function showGift() {
+            const modal = document.getElementById('prank-modal');
+            const content = document.getElementById('prank-content');
+            
+            modal.classList.remove('hidden');
+            // Small delay for animation
+            setTimeout(() => {
+                content.classList.remove('scale-0');
+                content.classList.add('scale-100');
+            }, 50);
+        }
+
+        function closePrank() {
+            const modal = document.getElementById('prank-modal');
+            const content = document.getElementById('prank-content');
+            
+            content.classList.remove('scale-100');
+            content.classList.add('scale-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+    </script>
+</body>
+</html>
